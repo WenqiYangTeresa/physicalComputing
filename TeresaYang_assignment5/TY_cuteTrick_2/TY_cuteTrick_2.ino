@@ -6,7 +6,7 @@ const int photoPin = A0;
 int photoState;
 
 //range threshold
-const int environmentRange = 380;
+const int environmentRange = 370;
 const int highRange = environmentRange * 1.5;
 const int lowRange = environmentRange / 2;
 const int darkRange = environmentRange / 7;
@@ -22,7 +22,7 @@ int fadeValue;
 long ShortTime = 250;
 long LongTime = 850;
 unsigned long previousMillis = 0;
-int ledState = 0;
+int ledState = 255;
 int counter = 0;
 
 //rainbow variables
@@ -59,7 +59,7 @@ void loop() {
     }
     
     setMode(ledMode);
-    Serial.println(ledMode);
+    //Serial.println(ledMode);
   }  else if (photoState > lowRange && photoState <= highRange) {
     //default
     //OFF
@@ -80,19 +80,20 @@ void loop() {
 }
 
 //SOS without delay()
+//SOS without delay()
 void sos () {
   unsigned long currentMillis = millis();
   //S Light-Dark-Light-Dark-Light
-  if (counter < 5) {
-    if ((ledState == 0) && (currentMillis - previousMillis >= ShortTime)) {
-      ledState = 255;
+  if (counter < 6) {
+    if ((ledState == 255) && (currentMillis - previousMillis >= ShortTime)) {
+      ledState = 0;
       previousMillis = currentMillis;
       analogWrite(ledPinRed, ledState);
       analogWrite(ledPinBlue, ledState);
       analogWrite(ledPinGreen, ledState);
       counter ++;
-    } else if ((ledState == 255) && (currentMillis - previousMillis >= ShortTime)) {
-      ledState = 0;
+    } else if ((ledState == 0) && (currentMillis - previousMillis >= ShortTime)) {
+      ledState = 255;
       previousMillis = currentMillis;
       analogWrite(ledPinRed, ledState);
       analogWrite(ledPinBlue, ledState);
@@ -101,16 +102,16 @@ void sos () {
     }
   }
   //o Dark-Light-Dark-Light-Dark-Light-Dark
-  if (counter >= 5 && counter < 12) {
-    if ((ledState == 0) && (currentMillis - previousMillis >= LongTime)) {
-      ledState = 255;
+  if (counter >= 6 && counter < 12) {
+    if ((ledState == 255) && (currentMillis - previousMillis >= LongTime)) {
+      ledState = 0;
       previousMillis = currentMillis;
       analogWrite(ledPinRed, ledState);
       analogWrite(ledPinBlue, ledState);
       analogWrite(ledPinGreen, ledState);
       counter ++;
-    } else if ((ledState == 255) && (currentMillis - previousMillis >= LongTime)) {
-      ledState = 0;
+    } else if ((ledState == 0) && (currentMillis - previousMillis >= LongTime)) {
+      ledState = 255;
       previousMillis = currentMillis;
       analogWrite(ledPinRed, ledState);
       analogWrite(ledPinBlue, ledState);
