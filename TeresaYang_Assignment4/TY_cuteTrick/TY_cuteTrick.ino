@@ -6,9 +6,9 @@ const int photoPin = A0;
 int photoState;
 
 //range threshold
-const int highRange = 100;
-const int midRange = 40;
-const int lowRange = 20;
+const int highRange = 110;
+const int midRange = 75;
+const int lowRange = 40;
 
 //3 modes of gradient counting
 int ledMode = 0;
